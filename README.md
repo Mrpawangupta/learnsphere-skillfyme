@@ -2,7 +2,7 @@
 
 > A polyglot microservices platform for enterprise-grade online learning, skill development, and workforce upskilling — built on cloud-native principles.
 
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](#19-license)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org)
 [![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://python.org)
 [![Go](https://img.shields.io/badge/Go-1.21+-00ADD8.svg)](https://go.dev)
@@ -1224,21 +1224,7 @@ The BFF is a natural magnet for business logic that belongs in domain services. 
 
 ## 19. License
 
-```
-Copyright 2025 Learnsyte Learning Private Limited (Skillfyme)
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at:
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
+This project is the exclusive property of **Learnsyte Learning Private Limited (Skillfyme)**. All rights reserved.
 
 ---
 
