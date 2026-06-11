@@ -142,68 +142,28 @@ Modern enterprises face a critical skills gap: workforce upskilling programmes a
 
 ```mermaid
 flowchart TD
-    Internet(["Internet / Browser"])
+    Browser(["User Browser"])
 
-    subgraph Ingress["Ingress Layer"]
-        NG["Nginx Ingress\nTLS Termination\ncert-manager / Let's Encrypt"]
-    end
+    Browser --> UI["Frontend\nReact 18 · :3000"]
+    UI -->|"JWT"| BFF["API Gateway\nui-backend · :4000"]
 
-    subgraph Frontend["Frontend"]
-        UI["ui-frontend\nReact 18 + Vite\nTailwindCSS + TanStack Query\n:3000"]
-    end
+    BFF --> CC["course-catalog\n:9101"]
+    BFF --> EN["enrollment\n:9106"]
+    BFF --> PY["payment\n:9107"]
+    BFF --> LS["live-session\n:9104"]
+    BFF --> LP["learning-path\n:9102"]
+    BFF --> AE["assessment-engine\n:9103"]
 
-    subgraph BFF["API Gateway — Backend for Frontend"]
-        UB["ui-backend\nNode.js 18 + Express\nJWT Auth · Redis Cache · Rate Limit\n:4000"]
-    end
+    CC --> MongoDB[("MongoDB")]
+    EN --> PG[("PostgreSQL")]
+    PY --> PG
+    LP --> PG
+    AE --> PG
+    LS --> MongoDB
+    BFF --> Redis[("Redis\nCache · Cart")]
 
-    subgraph Services["Domain Microservices"]
-        direction LR
-        CC["course-catalog\nNode.js 18 + Mongoose\nMongoDB + Elasticsearch\n:9101"]
-        LP["learning-path\nPython 3.11 + FastAPI\nPostgreSQL async\n:9102"]
-        AE["assessment-engine\nGo 1.21 + Gin\nPostgreSQL\n:9103"]
-        LS["live-session\nNode.js 18\nMongoDB\n:9104"]
-        CR["credits-currency\nNode.js 18\nRedis\n:9105"]
-        EN["enrollment\nNode.js 18\nPostgreSQL\n:9106"]
-        PY["payment\nNode.js 18 + Stripe\nPostgreSQL\n:9107"]
-        NT["notification\nNode.js 18 + Nodemailer\nKafka Consumer\n:9108"]
-    end
-
-    subgraph Async["Async Event Bus — Apache Kafka"]
-        K1["enrollment.created\nWelcome email"]
-        K2["payment.confirmed\nActivate enrollment"]
-        K3["session.booked\nReminder email"]
-    end
-
-    subgraph Data["Data Layer"]
-        direction LR
-        MG["MongoDB 7\nCourses · Sessions"]
-        PG["PostgreSQL 16\nEnrollments · Payments\nAssessments · Paths"]
-        RD["Redis 7\nCart · Cache · Credits"]
-        ES["Elasticsearch 8.11\nFull-text Search"]
-    end
-
-    subgraph Obs["Observability Stack"]
-        direction LR
-        PR["Prometheus"]
-        GR["Grafana"]
-        JA["Jaeger Tracing"]
-        LK["Loki Logs"]
-    end
-
-    Internet --> NG --> UI
-    UI -->|"/api/* Bearer JWT"| UB
-    UB --> CC & LP & AE & LS & CR & EN & PY & NT
-    PY -->|"payment.confirmed"| K2
-    EN -->|"enrollment.created"| K1
-    LS -->|"session.booked"| K3
-    K1 & K2 & K3 --> NT
-    CC --> MG & ES
-    LS --> MG
-    LP & AE & EN & PY --> PG
-    CR --> RD
-    UB --> RD
-    UB & CC & LP & AE & LS & CR & EN & PY & NT --> PR
-    PR --> GR & JA & LK
+    PY & EN --> NT["notification\n:9108"]
+    NT -->|"email"| User(["User Inbox"])
 ```
 
 ### Request Flow
