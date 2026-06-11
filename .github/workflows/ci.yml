@@ -157,16 +157,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run Trivy vulnerability scan
+      - name: Run Trivy filesystem scan
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: "${{ env.IMAGE_PREFIX }}/ui-backend:latest"
-          format: "sarif"
-          output: "trivy-results.sarif"
+          scan-type: "fs"
+          scan-ref: "."
+          format: "table"
           severity: "CRITICAL,HIGH"
-
-      - name: Upload scan results
-        uses: github/codeql-action/upload-sarif@v3
-        if: always()
-        with:
-          sarif_file: "trivy-results.sarif"
+          exit-code: "0"
