@@ -1226,10 +1226,3 @@ The BFF is a natural magnet for business logic that belongs in domain services. 
 
 **Learnsyte Learning Private Limited (Skillfyme)**. All rights reserved.
 
----
-
-<div align="center">
-
-Built with care by **Learnsyte Learning Private Limited (Skillfyme)**
-
-</div>
