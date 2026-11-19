@@ -1,13 +1,11 @@
 -- Skillfyme PostgreSQL Init Script
 -- This runs once when the postgres container is first created
 
-CREATE DATABASE IF NOT EXISTS skillfyme;
 
 -- Grant all privileges to application user
 GRANT ALL PRIVILEGES ON DATABASE skillfyme TO skillfyme;
 
 -- Enable UUID extension
-\c skillfyme;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
@@ -133,4 +131,4 @@ VALUES
   ('Python Data Analysis Skills Check', 'Hands-on assessment with pandas, NumPy, and data visualization using real datasets.', 'practical', 'intermediate', 60, 70, TRUE, 25)
 ON CONFLICT DO NOTHING;
 
-RAISE NOTICE 'Skillfyme PostgreSQL initialization complete';
+DO $$ BEGIN RAISE NOTICE 'Skillfyme PostgreSQL initialization complete'; END $$;
