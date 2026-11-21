@@ -1,0 +1,10 @@
+== Task 1 BEFORE: auth behaviour on unmodified code ==
+--- wrong password, valid length ---
+{"user":{"id":"demo-user-001","name":"Demo Learner","email":"test2@skillfyme.com","role":"learner"},"token":"<redacted>"}
+HTTP 200
+--- email never registered ---
+{"user":{"id":"demo-user-001","name":"Demo Learner","email":"nobody-xyz@skillfyme.com","role":"learner"},"token":"<redacted>"}
+HTTP 200
+--- duplicate register (brief expects 409) ---
+{"user":{"id":"user-1795266647359","name":"Test Two","email":"test2@skillfyme.com","role":"learner"},"token":"<redacted>"}
+HTTP 201
