@@ -1,0 +1,32 @@
+== docker compose ps ==
+NAME                          IMAGE                                     COMMAND                  SERVICE             CREATED              STATUS                    PORTS
+skillfyme-assessment-engine   learnsphere-skillfyme-assessment-engine   "/app/assessment-eng…"   assessment-engine   9 minutes ago        Up 9 minutes              0.0.0.0:9103->9103/tcp, [::]:9103->9103/tcp
+skillfyme-course-catalog      learnsphere-skillfyme-course-catalog      "docker-entrypoint.s…"   course-catalog      22 hours ago         Up 15 minutes             0.0.0.0:9101->9101/tcp, [::]:9101->9101/tcp
+skillfyme-credits-currency    learnsphere-skillfyme-credits-currency    "docker-entrypoint.s…"   credits-currency    22 hours ago         Up 15 minutes             0.0.0.0:9105->9105/tcp, [::]:9105->9105/tcp
+skillfyme-enrollment          learnsphere-skillfyme-enrollment          "docker-entrypoint.s…"   enrollment          9 minutes ago        Up 9 minutes              0.0.0.0:9106->9106/tcp, [::]:9106->9106/tcp
+skillfyme-kafka               confluentinc/cp-kafka:7.5.0               "/etc/confluent/dock…"   kafka               3 minutes ago        Up 3 minutes              0.0.0.0:9092->9092/tcp, [::]:9092->9092/tcp
+skillfyme-learning-path       learnsphere-skillfyme-learning-path       "uvicorn src.main:ap…"   learning-path       22 hours ago         Up 15 minutes             0.0.0.0:9102->9102/tcp, [::]:9102->9102/tcp
+skillfyme-live-session        learnsphere-skillfyme-live-session        "docker-entrypoint.s…"   live-session        About a minute ago   Up About a minute         0.0.0.0:9104->9104/tcp, [::]:9104->9104/tcp
+skillfyme-mongo               mongo:7                                   "docker-entrypoint.s…"   mongodb             22 hours ago         Up 15 minutes (healthy)   0.0.0.0:27017->27017/tcp, [::]:27017->27017/tcp
+skillfyme-notification        learnsphere-skillfyme-notification        "docker-entrypoint.s…"   notification        About a minute ago   Up About a minute         0.0.0.0:9108->9108/tcp, [::]:9108->9108/tcp
+skillfyme-payment             learnsphere-skillfyme-payment             "docker-entrypoint.s…"   payment             9 minutes ago        Up 9 minutes              0.0.0.0:9107->9107/tcp, [::]:9107->9107/tcp
+skillfyme-postgres            postgres:16-alpine                        "docker-entrypoint.s…"   postgres            22 hours ago         Up 15 minutes (healthy)   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+skillfyme-redis               redis:7-alpine                            "docker-entrypoint.s…"   redis               22 hours ago         Up 15 minutes (healthy)   0.0.0.0:6379->6379/tcp, [::]:6379->6379/tcp
+skillfyme-ui-backend          learnsphere-skillfyme-ui-backend          "docker-entrypoint.s…"   ui-backend          5 minutes ago        Up 5 minutes              0.0.0.0:4000->4000/tcp, [::]:4000->4000/tcp
+skillfyme-ui-frontend         learnsphere-skillfyme-ui-frontend         "/docker-entrypoint.…"   ui-frontend         5 minutes ago        Up 5 minutes              80/tcp, 0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+skillfyme-zookeeper           confluentinc/cp-zookeeper:7.5.0           "/etc/confluent/dock…"   zookeeper           3 minutes ago        Up 3 minutes              2181/tcp, 2888/tcp, 3888/tcp
+
+== health check loop ==
+Port 3000: (non-JSON response, check manually)
+Port 4000: ok
+Port 9101: ok
+Port 9102: ok
+Port 9103: ok
+Port 9104: ok
+Port 9105: ok
+Port 9106: ok
+Port 9107: ok
+Port 9108: ok
+
+== frontend ==
+HTTP/1.1 200 OK
