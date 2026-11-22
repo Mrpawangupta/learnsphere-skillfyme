@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'skillfyme_dev_secret';
+import { getJwtSecret } from '../utils/config.js';
 
 export function authMiddleware(req, res, next) {
   const header = req.headers.authorization;
@@ -10,7 +9,7 @@ export function authMiddleware(req, res, next) {
 
   const token = header.slice(7);
   try {
-    const payload = jwt.verify(token, JWT_SECRET);
+    const payload = jwt.verify(token, getJwtSecret());
     req.user = payload;
     next();
   } catch {
@@ -22,7 +21,7 @@ export function optionalAuth(req, _res, next) {
   const header = req.headers.authorization;
   if (header?.startsWith('Bearer ')) {
     try {
-      req.user = jwt.verify(header.slice(7), JWT_SECRET);
+      req.user = jwt.verify(header.slice(7), getJwtSecret());
     } catch {
       // proceed unauthenticated
     }

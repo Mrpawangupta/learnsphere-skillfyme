@@ -28,7 +28,9 @@
     "pino-http": "^9.0.0",
     "swagger-ui-express": "^5.0.0",
     "yamljs": "^0.3.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "bcryptjs": "^2.4.3",
+    "pg": "^8.11.3"
   },
   "devDependencies": {
     "chai": "^4.3.10",

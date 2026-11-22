@@ -148,11 +148,14 @@ services:
       PAYMENT_URL: http://payment:9107
       NOTIFICATION_URL: http://notification:9108
       JWT_SECRET: skillfyme_jwt_secret_change_in_prod
+      DATABASE_URL: postgresql://skillfyme:skillfyme_secret@postgres:5432/skillfyme
       LOG_LEVEL: info
     ports:
       - "4000:4000"
     depends_on:
       redis:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
     networks:
       - skillfyme-net
