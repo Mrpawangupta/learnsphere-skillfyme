@@ -1,0 +1,26 @@
+== Task 1 AFTER: real authentication ==
+--- register new user (expect 201) ---
+{"user":{"id":"8a5b265c-da26-40e3-995e-296bd80ad97e","name":"Auth Check","email":"auth-1795439668@skillfyme.com","role":"learner"},"token":"<redacted>"}
+HTTP 201
+--- duplicate register (expect 409) ---
+{"error":"Email already registered"}
+HTTP 409
+--- login, correct password (expect 200) ---
+{"user":{"id":"8a5b265c-da26-40e3-995e-296bd80ad97e","name":"Auth Check","email":"auth-1795439668@skillfyme.com","role":"learner"},"token":"<redacted>"}
+HTTP 200
+--- login, wrong password (expect 401) ---
+{"error":"Invalid email or password"}
+HTTP 401
+--- login, short wrong password (expect 401, not 400) ---
+{"error":"Invalid email or password"}
+HTTP 401
+--- login, email never registered (expect 401) ---
+{"error":"Invalid email or password"}
+HTTP 401
+--- stored password is a bcrypt hash, not plain text ---
+             email             | hash_prefix 
+-------------------------------+-------------
+ auth-1795439605@skillfyme.com | $2a$10$
+ auth-1795439668@skillfyme.com | $2a$10$
+(2 rows)
+

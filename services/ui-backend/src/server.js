@@ -17,11 +17,14 @@ import { creditsRouter } from './routes/credits.js';
 import { healthRouter } from './routes/health.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { authMiddleware } from './middleware/auth.js';
+import { getJwtSecret } from './utils/config.js';
 
 export { redis };
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+// Fail fast if required secrets are missing
+getJwtSecret();
 
 // ─── Security & Performance ─────────────────────────────────────────────────
 app.use(helmet());
