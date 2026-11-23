@@ -1,0 +1,21 @@
+
+> @skillfyme/ui-backend@1.0.0 test
+> mocha 'src/**/*.test.js' --exit
+
+
+
+  auth routes
+    ✔ registers a new user (201) and returns a token without the hash (122ms)
+    ✔ stores a bcrypt hash, not the plain password
+    ✔ rejects duplicate email (409), case-insensitive
+    ✔ rejects short password on register (400)
+    ✔ logs in with correct password (200) (91ms)
+    ✔ wrong password returns 401 (88ms)
+    ✔ short wrong password returns 401, not 400 (87ms)
+    ✔ unknown email returns 401 with the same message (89ms)
+    ✔ /me works with a valid token and fails without one (98ms)
+    ✔ concurrent duplicate (unique-index error 23505) returns 409 (93ms)
+
+
+  10 passing (691ms)
+
