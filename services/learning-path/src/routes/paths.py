@@ -1,25 +1,25 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
-from typing import Optional
 from uuid import UUID
+
+from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..database import get_db
 from ..models import LearningPath
-from ..schemas import LearningPathCreate, LearningPathResponse, LearningPathListResponse
+from ..schemas import LearningPathCreate, LearningPathListResponse, LearningPathResponse
 
 router = APIRouter()
 
 
 @router.get("/", response_model=LearningPathListResponse)
 async def list_paths(
-    category: Optional[str] = None,
-    level: Optional[str] = None,
+    category: str | None = None,
+    level: str | None = None,
     page: int = Query(default=1, ge=1),
     limit: int = Query(default=12, ge=1, le=48),
     db: AsyncSession = Depends(get_db),
 ):
-    filters = [LearningPath.is_published == True]
+    filters = [LearningPath.is_published.is_(True)]
     if category:
         filters.append(LearningPath.category == category)
     if level:
