@@ -34,12 +34,9 @@ jobs:
         working-directory: services/${{ matrix.service }}
         run: npm install --legacy-peer-deps
 
-      - name: Check syntax
+      - name: Run tests
         working-directory: services/${{ matrix.service }}
-        run: |
-          echo "Checking JS syntax for ${{ matrix.service }}..."
-          find src -name "*.js" -not -path "*/node_modules/*" | xargs -I{} node --check {} 2>&1 && echo "Syntax OK" || true
-        continue-on-error: true
+        run: npm test
 
   # ─── Lint & Unit Tests — Python ─────────────────────────────────────────────
   lint-test-python:
@@ -55,11 +52,14 @@ jobs:
 
       - name: Install dependencies
         working-directory: services/learning-path
-        run: pip install -r requirements.txt
+        run: pip install -r requirements-dev.txt
 
       - name: Lint with ruff
-        run: pip install ruff && ruff check services/learning-path/src
-        continue-on-error: true
+        run: pip install ruff && ruff check services/learning-path/src services/learning-path/tests
+
+      - name: Run tests
+        working-directory: services/learning-path
+        run: python -m pytest -q
 
   # ─── Lint & Unit Tests — Go ──────────────────────────────────────────────────
   lint-test-go:
@@ -80,7 +80,10 @@ jobs:
       - name: Vet
         working-directory: services/assessment-engine
         run: go vet ./src/...
-        continue-on-error: true
+
+      - name: Test
+        working-directory: services/assessment-engine
+        run: go test ./src/...
 
   # ─── Docker Build ────────────────────────────────────────────────────────────
   docker-build:
