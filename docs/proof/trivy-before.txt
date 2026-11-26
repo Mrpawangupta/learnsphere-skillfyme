@@ -1,0 +1,11 @@
+  severity: CRITICAL,HIGH
+^[[36;1mset_env_var_if_provided "TRIVY_SEVERITY" "$INPUT_SEVERITY" "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"^[[0m
+  INPUT_SEVERITY: CRITICAL,HIGH
+Total: 48 (HIGH: 46, CRITICAL: 2)
+│ mongoose         │ CVE-2026-125120     │ CRITICAL │        │ 8.24.0            │ 6.13.11, 7.8.12, 8.24.3, 9.9.2  │ Mongoose: sanitizeFilter not 
+│ proxy-addr       │ CVE-2026-90711      │ CRITICAL │        │ 2.0.7             │ 2.0.8                           │ proxy-addr: proxy-addr vulner
+Total: 23 (HIGH: 23, CRITICAL: 0)
+Total: 2 (HIGH: 0, CRITICAL: 2)
+│ python-jose │ CVE-2024-33663 │ CRITICAL │ fixed    │ 3.3.0             │ 3.4.0         │ python-jose: algorithm confusion with OpenSSH ECDSA key
+Total: 1 (HIGH: 0, CRITICAL: 1)
+CRITICAL: Stripe (stripe-secret-token)
