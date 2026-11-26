@@ -5,6 +5,7 @@ import compression from 'compression';
 import pinoHttp from 'pino-http';
 import mongoose from 'mongoose';
 import pino from 'pino';
+import { fileURLToPath } from 'url';
 import { Session } from './models/Session.js';
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'info', base: { service: 'live-session' } });
@@ -75,6 +76,11 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message });
 });
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/skillfyme')
-  .then(() => app.listen(PORT, () => logger.info({ port: PORT }, 'Live Session service started')))
-  .catch((err) => { logger.error(err); process.exit(1); });
+export { app };
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/skillfyme')
+    .then(() => app.listen(PORT, () => logger.info({ port: PORT }, 'Live Session service started')))
+    .catch((err) => { logger.error(err); process.exit(1); });
+}
+

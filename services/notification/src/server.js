@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import pinoHttp from 'pino-http';
 import pino from 'pino';
 import nodemailer from 'nodemailer';
+import { fileURLToPath } from 'url';
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'info', base: { service: 'notification' } });
 const app = express();
@@ -91,4 +92,9 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message });
 });
 
-app.listen(PORT, () => logger.info({ port: PORT }, 'Notification service started'));
+export { app, transporter };
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(PORT, () => logger.info({ port: PORT }, 'Notification service started'));
+}
+

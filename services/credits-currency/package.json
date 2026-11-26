@@ -18,5 +18,5 @@
     "pino": "^8.16.0",
     "pino-http": "^9.0.0"
   },
-  "devDependencies": { "nodemon": "^3.0.2" }
+  "devDependencies": { "mocha": "^10.2.0", "nodemon": "^3.0.2" }
 }

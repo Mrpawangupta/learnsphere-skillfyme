@@ -4,12 +4,13 @@ import helmet from 'helmet';
 import pinoHttp from 'pino-http';
 import pino from 'pino';
 import Redis from 'ioredis';
+import { fileURLToPath } from 'url';
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'info', base: { service: 'credits-currency' } });
 const app = express();
 const PORT = process.env.PORT || 9105;
 
-const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
+const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', { lazyConnect: true });
 redis.on('error', (err) => logger.error({ err }, 'Redis error'));
 
 // Static FX rates — in production these would be fetched from a live FX provider
@@ -84,4 +85,9 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message });
 });
 
-app.listen(PORT, () => logger.info({ port: PORT }, 'Credits & Currency service started'));
+export { app, redis };
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  app.listen(PORT, () => logger.info({ port: PORT }, 'Credits & Currency service started'));
+}
+

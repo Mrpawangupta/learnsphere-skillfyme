@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import pinoHttp from 'pino-http';
 import pino from 'pino';
 import pg from 'pg';
+import { fileURLToPath } from 'url';
 
 const { Pool } = pg;
 const logger = pino({ level: process.env.LOG_LEVEL || 'info', base: { service: 'payment' } });
@@ -88,6 +89,11 @@ app.use((err, _req, res, _next) => {
   res.status(500).json({ error: err.message });
 });
 
-initSchema()
-  .then(() => app.listen(PORT, () => logger.info({ port: PORT }, 'Payment service started')))
-  .catch((err) => { logger.error(err); process.exit(1); });
+export { app, pool };
+
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  initSchema()
+    .then(() => app.listen(PORT, () => logger.info({ port: PORT }, 'Payment service started')))
+    .catch((err) => { logger.error(err); process.exit(1); });
+}
+
