@@ -1,21 +1,21 @@
-from pydantic import BaseModel, Field
-from typing import Optional, List
 from datetime import datetime
 from uuid import UUID
+
+from pydantic import BaseModel
 
 
 class LearningPathBase(BaseModel):
     title: str
-    description: Optional[str] = None
-    short_description: Optional[str] = None
+    description: str | None = None
+    short_description: str | None = None
     category: str
     level: str
     price: float = 0
     currency: str = "USD"
-    duration_weeks: Optional[int] = None
+    duration_weeks: int | None = None
     is_bestseller: bool = False
-    courses: List[str] = []
-    skills: List[str] = []
+    courses: list[str] = []
+    skills: list[str] = []
 
 
 class LearningPathCreate(LearningPathBase):
@@ -28,9 +28,9 @@ class LearningPathResponse(LearningPathBase):
     course_count: int
     enrolled_count: int
     is_published: bool
-    thumbnail: Optional[str] = None
-    color: Optional[str] = None
-    icon_color: Optional[str] = None
+    thumbnail: str | None = None
+    color: str | None = None
+    icon_color: str | None = None
     created_at: datetime
     updated_at: datetime
 
@@ -39,7 +39,7 @@ class LearningPathResponse(LearningPathBase):
 
 
 class LearningPathListResponse(BaseModel):
-    paths: List[LearningPathResponse]
+    paths: list[LearningPathResponse]
     total: int
     page: int
     pages: int

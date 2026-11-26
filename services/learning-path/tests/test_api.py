@@ -1,8 +1,8 @@
 import pytest
 from fastapi.testclient import TestClient
 
-from src.main import app
 from src.database import get_db
+from src.main import app
 
 
 class FakeResult:
