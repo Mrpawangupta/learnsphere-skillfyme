@@ -854,7 +854,7 @@ flowchart LR
 
 | Job | Strategy | Steps |
 |-----|----------|-------|
-| **lint-node** | Matrix: 8 Node services | `yarn install` → `node --check src/server.js` |
+| **lint-node** | Matrix: 8 Node services | `npm install` → `node --check src/server.js` |
 | **lint-python** | Single | `pip install` → `ruff check src/` |
 | **lint-go** | Single | `go mod download` → `go vet ./src/...` |
 | **docker-build** | Matrix: 10 services (main only) | `docker build` → `docker push ghcr.io/skillfyme/{service}:latest` |
@@ -1017,8 +1017,8 @@ Kubernetes liveness and readiness probes hit `/health` with `initialDelaySeconds
 ### Clone Repository
 
 ```bash
-git clone https://github.com/skillfyme/skillfyme-platform.git
-cd skillfyme-platform
+git clone https://github.com/Mrpawangupta/learnsphere-skillfyme.git
+cd learnsphere-skillfyme
 ```
 
 ### Environment Configuration
@@ -1058,8 +1058,8 @@ docker-compose logs -f ui-frontend ui-backend course-catalog
 
 ```bash
 # Terminal 1 — All Node.js services
-yarn install
-yarn dev   # Starts 8 Node services with concurrently
+npm install
+npm run dev   # Starts 8 Node services with concurrently
 
 # Terminal 2 — Python service
 cd services/learning-path
@@ -1100,11 +1100,13 @@ docker build --no-cache \
 # Run database migrations for learning-path
 docker exec learnsphere-learning-path-1 alembic upgrade head
 
-# Seed the database
-yarn seed
+# Seed data (courses, sessions, tables) loads automatically the first time the
+# databases start. To reset and reseed from scratch (this deletes all data):
+docker compose down -v
+docker compose up -d --build
 
 # Run all tests
-yarn test
+npm test
 
 # Scale a service
 kubectl scale deployment course-catalog --replicas=4 -n skillfyme
