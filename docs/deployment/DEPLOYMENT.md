@@ -41,18 +41,10 @@ kubectl cluster-info
 # Create namespace
 kubectl create namespace skillfyme
 
-# Create secrets (replace placeholder values!)
-kubectl create secret generic skillfyme-secrets \
-  --from-literal=JWT_SECRET='your_32char_jwt_secret_here' \
-  --from-literal=MONGODB_URI='mongodb://user:pass@mongodb:27017/skillfyme?authSource=admin' \
-  --from-literal=DATABASE_URL='postgresql://user:pass@postgres:5432/skillfyme' \
-  --from-literal=STRIPE_SECRET_KEY='sk_live_your_stripe_key' \
-  --from-literal=SMTP_HOST='smtp.sendgrid.net' \
-  --from-literal=SMTP_PORT='587' \
-  --from-literal=SMTP_USER='apikey' \
-  --from-literal=SMTP_PASS='your_sendgrid_api_key' \
-  --from-literal=FROM_EMAIL='noreply@skillfyme.com' \
-  -n skillfyme
+# Create secrets: values are never stored in git.
+# The script generates JWT_SECRET randomly. POSTGRES_PASSWORD must match the cluster's PostgreSQL.
+# Optional overrides: MONGODB_URI, STRIPE_SECRET_KEY, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, FROM_EMAIL
+POSTGRES_PASSWORD='<your-postgres-password>' ./scripts/create-k8s-secrets.sh skillfyme
 ```
 
 ### 2.2 Deploy with Kustomize
