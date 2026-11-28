@@ -52,9 +52,11 @@ func main() {
 	r.Use(gin.Recovery())
 	r.Use(requestLogger())
 	r.Use(corsMiddleware())
+	r.Use(metricsMiddleware())
 
 	// Health
 	r.GET("/health", healthHandler)
+		r.GET("/metrics", metricsHandler())
 
 	// API routes
 	v1 := r.Group("/api/v1")

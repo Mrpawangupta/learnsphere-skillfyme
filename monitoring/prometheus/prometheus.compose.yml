@@ -1,0 +1,49 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "ui-backend"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["ui-backend:4000"]
+
+  - job_name: "course-catalog"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["course-catalog:9101"]
+
+  - job_name: "learning-path"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["learning-path:9102"]
+
+  - job_name: "assessment-engine"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["assessment-engine:9103"]
+
+  - job_name: "live-session"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["live-session:9104"]
+
+  - job_name: "credits-currency"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["credits-currency:9105"]
+
+  - job_name: "enrollment"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["enrollment:9106"]
+
+  - job_name: "payment"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["payment:9107"]
+
+  - job_name: "notification"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["notification:9108"]

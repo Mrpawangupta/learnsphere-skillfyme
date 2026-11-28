@@ -1,4 +1,5 @@
 import express from 'express';
+import client from 'prom-client';
 import cors from 'cors';
 import helmet from 'helmet';
 import compression from 'compression';
@@ -18,6 +19,29 @@ app.use(compression());
 app.use(cors());
 app.use(express.json());
 app.use(pinoHttp({ logger }));
+
+// Prometheus metrics
+const register = new client.Registry();
+client.collectDefaultMetrics({ register });
+const httpDuration = new client.Histogram({
+  name: 'http_request_duration_seconds',
+  help: 'HTTP request duration in seconds',
+  labelNames: ['method', 'route', 'status'],
+  buckets: [0.005, 0.01, 0.05, 0.1, 0.25, 0.5, 1, 2.5, 5],
+  registers: [register],
+});
+app.use((req, res, next) => {
+  const end = httpDuration.startTimer();
+  res.on('finish', () => {
+    const route = req.route ? `${req.baseUrl}${req.route.path}` : 'unmatched';
+    end({ method: req.method, route, status: res.statusCode });
+  });
+  next();
+});
+app.get('/metrics', async (_req, res) => {
+  res.set('Content-Type', register.contentType);
+  res.end(await register.metrics());
+});
 
 // Health
 app.get('/health', (_req, res) => res.json({

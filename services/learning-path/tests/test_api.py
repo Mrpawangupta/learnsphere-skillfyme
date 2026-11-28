@@ -104,3 +104,11 @@ def test_get_path_rejects_invalid_uuid():
     r = client_with(session).get("/api/v1/paths/not-a-uuid")
     assert r.status_code == 422
     assert session.queries == 0
+
+
+def test_metrics_endpoint_exposes_http_request_metrics():
+    client = client_with(FakeSession())
+    client.get("/health/")
+    r = client.get("/metrics")
+    assert r.status_code == 200
+    assert "http_request_duration_seconds" in r.text

@@ -17,7 +17,8 @@
     "kafkajs": "^2.2.4",
     "nodemailer": "^6.9.7",
     "pino": "^8.16.0",
-    "pino-http": "^9.0.0"
+    "pino-http": "^9.0.0",
+    "prom-client": "^15.1.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.2",

@@ -70,3 +70,19 @@ func TestHealthReturns503WhenDatabaseIsDown(t *testing.T) {
 		t.Fatalf("unexpected body: %s", w.Body.String())
 	}
 }
+
+func TestMetricsEndpointExposesRequestDuration(t *testing.T) {
+	r := gin.New()
+	r.Use(metricsMiddleware())
+	r.GET("/x", func(c *gin.Context) { c.String(http.StatusOK, "ok") })
+	r.GET("/metrics", metricsHandler())
+	r.ServeHTTP(httptest.NewRecorder(), httptest.NewRequest(http.MethodGet, "/x", nil))
+	w := httptest.NewRecorder()
+	r.ServeHTTP(w, httptest.NewRequest(http.MethodGet, "/metrics", nil))
+	if w.Code != http.StatusOK {
+		t.Fatalf("expected 200, got %d", w.Code)
+	}
+	if !strings.Contains(w.Body.String(), "http_request_duration_seconds") {
+		t.Fatal("metrics output is missing http_request_duration_seconds")
+	}
+}
